@@ -1,3 +1,7 @@
+console.clear();
+
+import { createCharacterCard } from "./card.js";
+
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
@@ -31,36 +35,29 @@ Now we can fetch the character data from the API and generate our cards with it.
 - DONE Call the function inside the `index.js`. Now you should see 20 cards in your app.
 */
 
-console.clear();
-
-import { createCharacterCard } from "./card.js";
-
+// funtion to fetch the characters
 async function fetchCharacters() {
   try {
-    const response = await fetch(
-      "https://rickandmortyapi.com/api/character?page=1"
-      // ODER https://rickandmortyapi.com/api/character
-    );
-    if (!response.ok) {
-      throw new Error("Rick has died");
-    }
+    // from the API
+    const response = await fetch("https://rickandmortyapi.com/api/character");
     const data = await response.json();
+
+    // Clear Container
+    cardContainer.innerHTML = "";
+
     // get the first 20 characters
-    return data.results.slice(0, 20);
+    // return data.results.slice(0, 20);
+
+    // create HTML card for characters
+    data.result.results.forEach((character) => {
+      const card = createCharacterCard(character);
+      cardContainer.appendChild(card);
+    });
+
+    // error message
   } catch (err) {
     console.error("Rick is not home:", err);
   }
 }
 
-async function renderCharacters() {
-  const characters = await fetchCharacters();
-  const cardContainer = document.querySelector("#cardContainer");
-  // OR INNER HTML
-  // cardContainer.innerHTML = ""; // clear the container
-  characters.forEach((character) => {
-    const card = createCharacterCard(character);
-    cardContainer.appendChild(card);
-  });
-}
-
-renderCharacters();
+fetchCharacters();
