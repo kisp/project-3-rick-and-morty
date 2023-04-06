@@ -15,5 +15,47 @@ const maxPage = 1;
 const page = 1;
 const searchQuery = "";
 
-cardContainer.appendChild(createCharacterCard());
-cardContainer.appendChild(createCharacterCard());
+/* ------------------------------ 
+          FETCH DATA
+------------------------------ */
+// You can access the list of characters by using the /character endpoint.
+// https://rickandmortyapi.com/api/character
+/*
+Now we can fetch the character data from the API and generate our cards with it.
+- DONE Inside of the `index.js` create a function called `fetchCharacters`.
+- DONE Use your knowledge about fetching to get the first 20 characters from the API. You can find the
+  correct API endpoint in the docs.
+- DONE Import the `createCharacterCard` function.
+- DONE After successfully fetching the character data, use array methods to create an HTML card for each
+  character and append it to the `cardContainer`.
+- DONE Make sure that the `cardContainer` is emptied every time new characters are fetched (HINT: you can
+  use `innerHTML = ''` for that).
+- DONE Call the function inside the `index.js`. Now you should see 20 cards in your app.
+*/
+
+// funtion to fetch the characters
+async function fetchCharacters() {
+  try {
+    // from the API
+    const response = await fetch("https://rickandmortyapi.com/api/character");
+    const data = await response.json();
+
+    // Clear Container
+    cardContainer.innerHTML = "";
+
+    // get the first 20 characters
+    // return data.results.slice(0, 20);
+
+    // create HTML card for characters
+    data.results.forEach((character) => {
+      const card = createCharacterCard(character);
+      cardContainer.appendChild(card);
+    });
+
+    // error message
+  } catch (err) {
+    console.error("Rick is not home:", err);
+  }
+}
+
+fetchCharacters();
