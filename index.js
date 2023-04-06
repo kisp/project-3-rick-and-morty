@@ -14,6 +14,9 @@ const pagination = document.querySelector('[data-js="pagination"]');
 let maxPage = 1;
 let page = 1;
 let searchQuery = "";
+/* ------------------------------ 
+          PAGINATION
+------------------------------ */
 
 const updatePagination = () => {
   pagination.innerHTML = `${page} / ${maxPage}`;
@@ -33,6 +36,33 @@ const installPaginationEventHandlers = () => {
   nextButton.addEventListener("click", gotoNextPage);
   prevButton.addEventListener("click", gotoPrevPage);
 };
+
+/* ------------------------------ 
+          SEARCH BAR
+------------------------------ */
+/*
+Now we want even more functionality in our app. We want to find individual characters by typing
+their name into the search bar.
+
+- DONE Create a 'submit' event listener on the search bar.
+- DONE Update the state variable `searchQuery` with the current text inside the search bar every time
+  this event is triggered.
+- DONE Modify the fetch URL again by adding another url encoded attribute `name`: append
+  `&name=<searchQuery>` to the url. If the search query is an empty string, it will be ignored by
+  the API, so don't worry about that.
+- DONE Now trigger the function `fetchCharacters` whenever a submit event happens.
+
+> 💡 You might run into some bugs at this point. Think about how the page and max page index might
+> have to change when you start searching for only subsets of all characters.
+*/
+
+// search bar event listener
+searchBar.addEventListener("submit", (event) => {
+  event.preventDefault();
+  // update state variable (Filer Characters)
+  searchQuery = searchBar.querySelector("input").value;
+  fetchCharacters();
+});
 
 /* ------------------------------ 
           FETCH DATA
@@ -57,7 +87,7 @@ async function fetchCharacters() {
   try {
     // from the API
     const response = await fetch(
-      `https://rickandmortyapi.com/api/character?page=${page}`
+      `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`
     );
     const data = await response.json();
 
