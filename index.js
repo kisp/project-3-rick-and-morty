@@ -35,11 +35,13 @@ const updatePagination = () => {
 };
 
 const gotoNextPage = () => {
+  if (page === maxPage) return;
   page++;
   fetchCharacters();
 };
 
 const gotoPrevPage = () => {
+  if (page === 1) return;
   page--;
   fetchCharacters();
 };
