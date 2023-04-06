@@ -1,4 +1,12 @@
+/* ------------------------------ 
+          IMPORTS
+------------------------------ */
+
 import { createCharacterCard } from "./components/card/card.js";
+
+/* ------------------------------
+          DOM ELEMENTS  
+------------------------------ */
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -10,10 +18,13 @@ const prevButton = document.querySelector('[data-js="button-prev"]');
 const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
-// States
+/* ------------------------------
+          STATE VARIABLES         
+------------------------------ */
+
 let maxPage = 1;
 let page = 1;
-let searchQuery = "rick";
+let searchQuery = "";
 
 /* ------------------------------ 
           PAGINATION
