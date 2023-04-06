@@ -11,9 +11,28 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
-const maxPage = 1;
-const page = 1;
-const searchQuery = "";
+let maxPage = 1;
+let page = 1;
+let searchQuery = "";
+
+const updatePagination = () => {
+  pagination.innerHTML = `${page} / ${maxPage}`;
+};
+
+const gotoNextPage = () => {
+  page++;
+  fetchCharacters();
+};
+
+const gotoPrevPage = () => {
+  page--;
+  fetchCharacters();
+};
+
+const installPaginationEventHandlers = () => {
+  nextButton.addEventListener("click", gotoNextPage);
+  prevButton.addEventListener("click", gotoPrevPage);
+};
 
 /* ------------------------------ 
           FETCH DATA
@@ -37,8 +56,15 @@ Now we can fetch the character data from the API and generate our cards with it.
 async function fetchCharacters() {
   try {
     // from the API
-    const response = await fetch("https://rickandmortyapi.com/api/character");
+    const response = await fetch(
+      `https://rickandmortyapi.com/api/character?page=${page}`
+    );
     const data = await response.json();
+
+    const info = data.info;
+    maxPage = info.pages;
+
+    updatePagination();
 
     // Clear Container
     cardContainer.innerHTML = "";
@@ -58,4 +84,5 @@ async function fetchCharacters() {
   }
 }
 
+installPaginationEventHandlers();
 fetchCharacters();
