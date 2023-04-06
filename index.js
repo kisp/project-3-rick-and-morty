@@ -47,7 +47,7 @@ async function fetchCharacters() {
     // return data.results.slice(0, 20);
 
     // create HTML card for characters
-    data.result.results.forEach((character) => {
+    data.results.forEach((character) => {
       const card = createCharacterCard(character);
       cardContainer.appendChild(card);
     });
