@@ -13,8 +13,7 @@ const pagination = document.querySelector('[data-js="pagination"]');
 // States
 let maxPage = 1;
 let page = 1;
-let searchQuery = "rick";
-
+let searchQuery = "";
 /* ------------------------------ 
           PAGINATION
 ------------------------------ */
