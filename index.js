@@ -75,6 +75,7 @@ searchBar.addEventListener("submit", (event) => {
   event.preventDefault();
   // update state variable (Filer Characters)
   searchQuery = searchBar.querySelector("input").value;
+  page = 1;
   fetchCharacters();
 });
 
